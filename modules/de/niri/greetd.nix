@@ -1,5 +1,5 @@
 {
-  os = { ... }: {
+  os = { pkgs, ... }: {
     services.greetd = {
       enable = true;
       settings = {

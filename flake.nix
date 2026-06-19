@@ -32,5 +32,14 @@
     };
   };
 
-  outputs = inputs: ((import ./lib/builder.nix).outputs inputs);
+  outputs =
+    inputs:
+    let
+      nixosConfigurations = (import ./lib/builder.nix).outputs inputs;
+      barbados = nixosConfigurations.nixosConfigurations.barbados;
+      iso = barbados.config.system.build.images.iso or barbados.config.system.build.isoImage;
+    in
+    nixosConfigurations // {
+      packages.x86_64-linux.iso = iso;
+    };
 }

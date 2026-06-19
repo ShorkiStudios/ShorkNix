@@ -1,5 +1,5 @@
 {
-  os = { ... }: {
-    services.swaync.enable = true;
+  os = { pkgs, ... }: {
+    environment.systemPackages = with pkgs; [ swaync ];
   };
 }

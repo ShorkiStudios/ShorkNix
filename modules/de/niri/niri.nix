@@ -1,5 +1,5 @@
 {
-  os = { ... }: {
+  os = { pkgs, ... }: {
     programs.niri.enable = true;
 
     environment.sessionVariables = {
