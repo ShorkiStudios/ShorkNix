@@ -1,0 +1,6 @@
+result
+result-*
+*.iso
+.DS_Store
+.direnv
+.envrc
