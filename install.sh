@@ -31,7 +31,7 @@ cryptsetup open "$LUKS_PART" cryptroot
 echo "=== Setting up LVM ==="
 pvcreate /dev/mapper/cryptroot
 vgcreate vg /dev/mapper/cryptroot
-lvcreate -L 16G -n swap vg
+lvcreate -L 23G -n swap vg
 lvcreate -l 100%FREE -n root vg
 
 echo "=== Formatting ==="
