@@ -101,6 +101,13 @@ in
         };
 
         modules = (collectOS expanded) ++ [
+          {
+            nixpkgs.overlays = [
+              (_final: prev: {
+                zen-browser = inputs.zen-browser.packages.${prev.system}.default;
+              })
+            ];
+          }
           inputs.home-manager.nixosModules.default
           {
             home-manager = {

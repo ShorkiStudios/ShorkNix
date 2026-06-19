@@ -1,5 +1,9 @@
 {
-  os = { pkgs, ... }: {
+  os = { inputs, pkgs, ... }: {
+    imports = [
+      inputs.niri.nixosModules.niri
+    ];
+
     programs.niri.enable = true;
 
     environment.sessionVariables = {
@@ -10,7 +14,6 @@
 
     xdg.portal = {
       enable = true;
-      wlr.enable = true;
       extraPortals = with pkgs; [
         xdg-desktop-portal-gtk
       ];

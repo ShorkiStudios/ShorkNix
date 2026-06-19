@@ -1,5 +1,5 @@
 {
   os = { pkgs, ... }: {
-    environment.systemPackages = with pkgs; [ swaync ];
+    environment.systemPackages = with pkgs; [ swaynotificationcenter ];
   };
 }
