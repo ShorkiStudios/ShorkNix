@@ -3,9 +3,7 @@
     {
       config,
       lib,
-      pkgs,
       modulesPath,
-      inputs,
       ...
     }:
     {
@@ -16,8 +14,6 @@
       boot = {
         kernelModules = [
           "kvm-intel"
-          "xe"
-          "snd_hda_intel"
         ];
         initrd = {
           availableKernelModules = [
@@ -28,24 +24,20 @@
             "sd_mod"
           ];
           kernelModules = [ ];
+          services.lvm.enable = true;
         };
         extraModulePackages = [ ];
 
-        loader = {
-          systemd-boot.enable = true;
-          efi.canTouchEfiVariables = true;
-        };
-
         initrd.luks.devices = {
           cryptroot = {
-            device = "/dev/disk/by-partuuid/f62a8ce8-98e3-4d07-83c0-0d0b0b9a1fc6";
+            device = "/dev/disk/by-label/CRYPTROOT";
             preLVM = true;
           };
         };
       };
 
       fileSystems."/" = {
-        device = "/dev/disk/by-uuid/42284ccd-7f4a-4f2b-b462-154fadc27540";
+        device = "/dev/disk/by-label/NIXROOT";
         fsType = "btrfs";
         options = [
           "subvol=@"
@@ -56,7 +48,7 @@
       };
 
       fileSystems."/boot" = {
-        device = "/dev/disk/by-uuid/AFB7-9CEA";
+        device = "/dev/disk/by-label/NIXBOOT";
         fsType = "vfat";
         options = [
           "fmask=0077"
@@ -65,7 +57,7 @@
       };
 
       fileSystems."/home" = {
-        device = "/dev/disk/by-uuid/42284ccd-7f4a-4f2b-b462-154fadc27540";
+        device = "/dev/disk/by-label/NIXROOT";
         fsType = "btrfs";
         options = [
           "subvol=@home"
@@ -76,7 +68,7 @@
       };
 
       fileSystems."/nix" = {
-        device = "/dev/disk/by-uuid/42284ccd-7f4a-4f2b-b462-154fadc27540";
+        device = "/dev/disk/by-label/NIXROOT";
         fsType = "btrfs";
         options = [
           "subvol=@nix"
@@ -87,18 +79,11 @@
         ];
       };
 
-      swapDevices = [ ];
+      swapDevices = [
+        { device = "/dev/disk/by-label/NIXSWAP"; }
+      ];
 
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-
-      hardware.graphics = {
-        enable = true;
-        extraPackages = with pkgs; [
-          intel-media-driver
-          intel-compute-runtime
-          intel-vaapi-driver
-        ];
-      };
     };
 }

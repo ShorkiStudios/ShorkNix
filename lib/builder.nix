@@ -104,7 +104,7 @@ in
           {
             nixpkgs.overlays = [
               (_final: prev: {
-                zen-browser = inputs.zen-browser.packages.${prev.system}.default;
+                zen-browser = inputs.zen-browser.packages.${prev.stdenv.hostPlatform.system}.default;
               })
             ];
           }

@@ -1,13 +1,20 @@
 {
   os =
-    { userSettings, ... }:
+    { pkgs, userSettings, ... }:
 
     {
+      programs.zsh.enable = true;
+
       users.groups.${userSettings.username} = { };
       users.users.${userSettings.username} = {
         isNormalUser = true;
         group = userSettings.username;
-        extraGroups = [ "wheel" ];
+        extraGroups = [
+          "networkmanager"
+          "wheel"
+        ];
+        shell = pkgs.zsh;
+        initialPassword = "shork";
       };
     };
 }

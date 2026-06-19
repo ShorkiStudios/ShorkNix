@@ -10,118 +10,60 @@ Inspired by [tt0fu/nixos-config](https://github.com/tt0fu/nixos-config).
 
 ---
 
-## Fresh Install (from NixOS ISO)
+## Install
 
-### 1. Boot the ISO
+Boot the official [NixOS minimal ISO](https://nixos.org/download/), connect to the internet, then run the installer.
 
-Write the [NixOS minimal ISO](https://nixos.org/download/) to a USB, boot, and connect to WiFi:
+### 1. Connect WiFi
 
 ```bash
 iwctl
 # station wlan0 connect <your-ssid>
 ```
 
-### 2. Run the installer
+### 2. Run Installer
+
+This erases the target disk and installs ShorkNix using LUKS, LVM, and btrfs. The script is fully automated except for the LUKS passphrase prompt.
 
 ```bash
 sudo -i
-curl -L https://raw.githubusercontent.com/ShorkiStudios/ShorkNix/main/install.sh | bash
+nix-shell -p curl git parted cryptsetup lvm2 btrfs-progs dosfstools --run 'curl -L https://raw.githubusercontent.com/ShorkiStudios/ShorkNix/main/install.sh | bash -s -- /dev/nvme0n1'
 ```
 
-Or do it manually (see [Manual Partitioning](#manual-partitioning) below).
+Use a different disk path if needed, for example `/dev/sda`.
 
-### 3. Wrap the hardware config
+### 3. Reboot
 
-After the installer clones the repo, copy the generated hardware config:
-
-```bash
-cp /mnt/etc/nixos/hardware-configuration.nix /mnt/etc/shorknix/modules/systems/barbados.nix
-```
-
-Edit `barbados.nix` and wrap it like this:
-
-```nix
-{
-  os =
-    { config, lib, modulesPath, ... }:
-
-    {
-      imports = [
-        (modulesPath + "/installer/scan/not-detected.nix")
-      ];
-
-      # paste the rest of hardware-configuration.nix here
-      boot.initrd.availableKernelModules = [ ... ];
-      fileSystems."/" = ...;
-      # etc.
-    };
-}
-```
-
-> **Note:** Remove any `nixpkgs.hostPlatform` and `boot.loader` lines from the copied config — those are already handled by the ShorkNix modules.
-
-### 4. Install
-
-```bash
-nixos-install --flake /mnt/etc/shorknix#barbados
-```
-
-### 5. Reboot
+When install completes:
 
 ```bash
 reboot
 ```
 
+First login:
+
+| User | Password |
+|---|---|
+| `shork` | `shork` |
+
+Change it immediately:
+
+```bash
+passwd
+```
+
 ---
 
-## Manual Partitioning
+## Disk Layout
 
-If you prefer to partition by hand, use a layout matching this config:
+The installer creates this layout and the NixOS config refers to it by label:
 
 | Partition | Size | Type | Mount |
 |---|---|---|---|
-| `nvme0n1p1` | 1 GiB | EFI (vfat) | `/boot` |
-| `nvme0n1p2` | rest | LUKS → LVM → btrfs | `/` (subvol=@) |
-
-```bash
-DISK=/dev/nvme0n1
-
-blkdiscard -f $DISK
-parted $DISK -- mklabel gpt
-parted $DISK -- mkpart ESP fat32 1MiB 1GiB
-parted $DISK -- set 1 esp on
-parted $DISK -- mkpart primary 1GiB 100%
-
-cryptsetup luksFormat ${DISK}p2
-cryptsetup open ${DISK}p2 cryptroot
-
-pvcreate /dev/mapper/cryptroot
-vgcreate vg /dev/mapper/cryptroot
-lvcreate -L 16G -n swap vg
-lvcreate -l 100%FREE -n root vg
-
-mkfs.vfat -F32 ${DISK}p1
-mkswap /dev/vg/swap
-mkfs.btrfs /dev/vg/root
-
-mount /dev/vg/root /mnt
-btrfs subvolume create /mnt/@
-btrfs subvolume create /mnt/@home
-btrfs subvolume create /mnt/@nix
-umount /mnt
-
-mount -o compress=zstd:3,subvol=@ /dev/vg/root /mnt
-mkdir -p /mnt/{boot,home,nix}
-mount ${DISK}p1 /mnt/boot
-mount -o compress=zstd:3,subvol=@home /dev/vg/root /mnt/home
-mount -o noatime,compress=zstd:3,subvol=@nix /dev/vg/root /mnt/nix
-swapon /dev/vg/swap
-
-nixos-generate-config --root /mnt
-git clone https://github.com/ShorkiStudios/ShorkNix.git /mnt/etc/shorknix
-```
-
-Then continue from [Wrap the hardware config](#3-wrap-the-hardware-config).
+| `NIXBOOT` | 1 GiB | EFI/vfat | `/boot` |
+| `CRYPTROOT` | rest | LUKS2 | opened as `cryptroot` |
+| `shorkvg/root` | remaining | btrfs label `NIXROOT` | `/`, `/home`, `/nix` subvols |
+| `shorkvg/swap` | 16 GiB | swap label `NIXSWAP` | swap |
 
 ---
 
@@ -135,22 +77,6 @@ git config --global user.email "you@example.com"
 
 # Rebuild with any changes
 sudo ./build.sh switch
-```
-
----
-
-## Building a Live ISO
-
-Build an ISO image of your system (including niri + noctalia):
-
-```bash
-nixos-rebuild build-image --image-variant iso --flake .#barbados
-```
-
-The ISO will be in `result/` — write to USB:
-
-```bash
-sudo dd if=result/*.iso of=/dev/sdX bs=4M status=progress
 ```
 
 ---
