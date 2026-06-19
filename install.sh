@@ -49,7 +49,8 @@ ROOT_LV="/dev/$VG_NAME/root"
 SWAP_LV="/dev/$VG_NAME/swap"
 
 echo "This will erase everything on $DISK."
-echo "The installer is fully automated except for the LUKS passphrase prompt."
+echo "The installer is fully automated except for the LUKS passphrase prompts."
+echo "You will create the passphrase, then enter it once more to unlock the disk for installation."
 echo ""
 
 swapoff -a 2>/dev/null || true
@@ -66,13 +67,13 @@ parted "$DISK" -- mkpart primary 1GiB 100%
 udevadm settle
 
 echo "=== Encrypting $LUKS_PART ==="
-cryptsetup luksFormat --type luks2 --label "$LUKS_LABEL" "$LUKS_PART"
-cryptsetup open "$LUKS_PART" "$LUKS_NAME"
+cryptsetup luksFormat --type luks2 --label "$LUKS_LABEL" "$LUKS_PART" < /dev/tty
+cryptsetup open "$LUKS_PART" "$LUKS_NAME" < /dev/tty
 
 echo "=== Setting up LVM ==="
 pvcreate -ff -y "/dev/mapper/$LUKS_NAME"
 vgcreate "$VG_NAME" "/dev/mapper/$LUKS_NAME"
-lvcreate -L 16G -n swap "$VG_NAME"
+lvcreate -L 23G -n swap "$VG_NAME"
 lvcreate -l 100%FREE -n root "$VG_NAME"
 
 echo "=== Formatting ==="

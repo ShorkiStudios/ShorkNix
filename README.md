@@ -23,11 +23,11 @@ iwctl
 
 ### 2. Run Installer
 
-This erases the target disk and installs ShorkNix using LUKS, LVM, and btrfs. The script is fully automated except for the LUKS passphrase prompt.
+This erases the target disk and installs ShorkNix using LUKS, LVM, and btrfs. The script is fully automated except for the LUKS passphrase prompts.
 
 ```bash
 sudo -i
-nix-shell -p curl git parted cryptsetup lvm2 btrfs-progs dosfstools --run 'curl -L https://raw.githubusercontent.com/ShorkiStudios/ShorkNix/main/install.sh | bash -s -- /dev/nvme0n1'
+nix-shell -p curl git parted cryptsetup lvm2 btrfs-progs dosfstools --run 'curl -L https://raw.githubusercontent.com/ShorkiStudios/ShorkNix/main/install.sh -o /tmp/shorknix-install.sh && bash /tmp/shorknix-install.sh /dev/nvme0n1'
 ```
 
 Use a different disk path if needed, for example `/dev/sda`.
@@ -63,7 +63,7 @@ The installer creates this layout and the NixOS config refers to it by label:
 | `NIXBOOT` | 1 GiB | EFI/vfat | `/boot` |
 | `CRYPTROOT` | rest | LUKS2 | opened as `cryptroot` |
 | `shorkvg/root` | remaining | btrfs label `NIXROOT` | `/`, `/home`, `/nix` subvols |
-| `shorkvg/swap` | 16 GiB | swap label `NIXSWAP` | swap |
+| `shorkvg/swap` | 23 GiB | swap label `NIXSWAP` | swap |
 
 ---
 
