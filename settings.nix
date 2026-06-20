@@ -6,8 +6,8 @@
   baseStyle = {
     font = {
       size = 15;
-      package = pkgs: pkgs.nerd-fonts.jetbrains-mono;
-      name = "JetBrainsMono Nerd Font Propo";
+      package = pkgs: pkgs.nerd-fonts.iosevka-term;
+      name = "IosevkaTerm Nerd Font Mono";
     };
     border = {
       thickness = 2;

@@ -1,0 +1,12 @@
+{
+  os = { ... }: {
+    systemd.services.disable-conservation-mode = {
+      description = "Disable Lenovo Ideapad battery conservation mode";
+      wantedBy = [ "multi-user.target" ];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "/bin/sh -c 'echo 0 > /sys/devices/pci0000:00/0000:00:1f.0/PNP0C09:00/VPC2004:00/conservation_mode'";
+      };
+    };
+  };
+}
