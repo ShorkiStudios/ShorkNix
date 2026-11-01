@@ -10,8 +10,18 @@
             type = "file";
             color =
               let
-                color = allModules.lib.color.color { inherit inputs; };
-                palette = map color.toHex (color.palette 6 0.8 0.1);
+                # Pansexual flag colors (Barbados, 2026-11-01) — was a
+                # generated rainbow from the shared color lib. The
+                # logo's six slots are the snowflake's six arms, so the
+                # three flag colors repeat twice, opposite arms matching.
+                palette = [
+                  "#FF218C"
+                  "#FFD800"
+                  "#21B1FF"
+                  "#FF218C"
+                  "#FFD800"
+                  "#21B1FF"
+                ];
               in
               builtins.listToAttrs (
                 builtins.genList (i: {
