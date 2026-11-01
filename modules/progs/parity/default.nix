@@ -161,7 +161,7 @@
         # --- emulators / gaming (his, beyond progs/gaming) ---
         ares # ares-emu
         bsnes-hd
-        dolphin-emu
+        # dolphin-emu REMOVED 2026-11-01 at Shorki's request (was in his pre-wipe set; he cut it during the parity build).
         parsec-bin # resolves the Parsec TODO in progs/gaming/barbados-gaming-extras.nix
         prismlauncher
 
