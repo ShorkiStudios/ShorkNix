@@ -52,6 +52,7 @@
             parity
             shortcuts
             social
+            tunnel
             utils
             video
             virtualization

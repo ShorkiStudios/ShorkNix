@@ -66,7 +66,7 @@
         {
           key = "SUPER + K";
           desc = "Keybind helper page (this page)";
-          lua = ''hl.dsp.exec_cmd("xdg-open $HOME/.local/share/keybinds.html")'';
+          lua = ''hl.dsp.exec_cmd("chromium --app=file://$HOME/.local/share/keybinds.html")''; # own app-mode window, not a browser tab (Shorki, 2026-11-01)
         }
         {
           key = "SUPER + CTRL + L";
@@ -381,12 +381,12 @@
             {
               key = "SUPER + ${step.mods}code:20";
               desc = "Resize ${step.axis} -${step.px}px";
-              lua = ''hl.dsp.window.resize({ relative = true, ${step.axis} = -${step.px} })'';
+              lua = ''hl.dsp.window.resize({ relative = true, x = ${if step.axis == "x" then "-${step.px}" else "0"}, y = ${if step.axis == "y" then "-${step.px}" else "0"} })''; # both axes required — single-axis resize errors in the Lua API (found 2026-11-01)
             }
             {
               key = "SUPER + ${step.mods}code:21";
               desc = "Resize ${step.axis} +${step.px}px";
-              lua = ''hl.dsp.window.resize({ relative = true, ${step.axis} = ${step.px} })'';
+              lua = ''hl.dsp.window.resize({ relative = true, x = ${if step.axis == "x" then step.px else "0"}, y = ${if step.axis == "y" then step.px else "0"} })'';
             }
           ])
           [
