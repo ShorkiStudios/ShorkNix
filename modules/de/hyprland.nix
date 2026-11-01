@@ -57,7 +57,7 @@
         settings = {
           config = {
             general = {
-              layout = "scrolling";
+              layout = "dwindle";
               border_size = style.border.thickness;
               gaps_in = style.spacing / 2;
               gaps_out = style.spacing;

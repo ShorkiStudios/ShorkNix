@@ -136,6 +136,11 @@
       # Home does the upstream filtering anyway).
       services.resolved.enable = lib.mkForce false;
 
+      # Tailscale (Shorki asked 2026-11-01): his own tailnet, same as
+      # on Omarchy. Enable the daemon declaratively; the one-time
+      # `sudo tailscale up` login is his to run (browser auth).
+      services.tailscale.enable = true;
+
       # Isabel's SSH key (Muse VM). Was only in the stock install's
       # configuration.nix, which this flake replaces — without this,
       # the flake's sshd rejects her key. (Interim manual add to
