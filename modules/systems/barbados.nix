@@ -96,6 +96,7 @@
         extraPackages = with pkgs; [
           intel-media-driver # VA-API driver for Iris Xe (iHD)
           intel-vaapi-driver # older VA-API driver (i965), kept for app compat
+          intel-compute-runtime # OpenCL (NEO): GPU compute for Blender/AI/photo tools (Shorki asked 2026-11-01)
           libvdpau-va-gl
         ];
       };
