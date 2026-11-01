@@ -11,14 +11,26 @@
             "$schema" = "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json";
             palette =
               let
-                color = allModules.lib.color.color { inherit inputs; };
                 count = 8;
-                palette = map color.toHex (color.palette count 0.9 0.1);
+                # Pansexual flag palette (barbados, 2026-11-01, Shorki's
+                # request — matches the kitty palette + shaderbg wallpaper).
+                # Was a generated rainbow ramp; now the flag's pink, yellow
+                # and cyan family, all bright enough for black segment text.
+                palette = [
+                  "#FF218C"
+                  "#FF5CA8"
+                  "#FF8FC0"
+                  "#FFD800"
+                  "#FFE14D"
+                  "#21B1FF"
+                  "#54C8FF"
+                  "#7FDBFF"
+                ];
               in
               {
-                "red" = "#FF0000";
-                "green" = "#00FF00";
-                "blue" = "#0000FF";
+                "red" = "#FF218C";
+                "green" = "#21B1FF";
+                "blue" = "#1E90D6";
                 "white" = "#FFFFFF";
                 "black" = "#111111";
               }
