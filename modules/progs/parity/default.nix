@@ -113,7 +113,7 @@
       programs.nixcord.enable = lib.mkForce false;
       home.packages = with pkgs; [
         # --- his CLI / shell tools ---
-        _7zip # 7zip (progs/3d/unity.nix also pulls p7zip; this is the upstream tool he had)
+        p7zip # 7zip (was _7zip in the draft — that attr doesn't exist in this nixpkgs; progs/3d/unity.nix pulls p7zip too, dedupes)
         alsa-utils
         bash-completion
         bat
