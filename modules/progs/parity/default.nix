@@ -18,7 +18,9 @@
   inputs = {
     nix-flatpak = {
       url = "github:gmodena/nix-flatpak";
-      inputs.nixpkgs.follows = "nixpkgs";
+      # No inputs.nixpkgs.follows: the pinned nix-flatpak has no nixpkgs
+      # input to override, and the dangling override made every build
+      # print a warning (cleaned 2026-11-01).
     };
   };
 

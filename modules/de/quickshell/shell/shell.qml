@@ -182,7 +182,7 @@ ShellRoot {
                 id: bottomRect
                 color: "transparent"
                 anchors.horizontalCenter: viewRect.horizontalCenter
-                y: GlobalState.appLauncherOpened ? parent.height - height : viewRect.y + viewRect.height
+                y: GlobalState.appLauncherOpened ? viewRect.y + (viewRect.height - height) / 2 : viewRect.y + viewRect.height // barbados 2026-11-01: open vertically centered in the view area (was bottom-flush, which sat low and clipped at the screen bottom)
                 width: launcher.implicitWidth + Sizes.gap * 2
                 height: launcher.implicitHeight + Sizes.gap * 2
                 radius: Sizes.borderRadius

@@ -51,11 +51,6 @@
       url = "github:lalzhanov/metashape-nix";
     };
     nix-flatpak = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
       url = "github:gmodena/nix-flatpak";
     };
     nix-math = {
