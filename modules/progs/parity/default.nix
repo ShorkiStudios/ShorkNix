@@ -41,7 +41,7 @@
           waylandFrontend = true;
           addons = with pkgs; [
             fcitx5-gtk
-            fcitx5-qt
+            qt6Packages.fcitx5-qt # was fcitx5-qt — not a top-level attr in this nixpkgs
           ];
         };
       };
@@ -150,7 +150,7 @@
         imv # image viewer; progs/utils/feh.nix (theirs) stays too
         libreoffice # libreoffice-fresh
         mpv
-        mpv-mpris
+        mpvScripts.mpris # was mpv-mpris — mpv scripts live under mpvScripts in this nixpkgs
         obsidian
         pinta # progs/2d/pinta.nix exists but the 2d tree is not selected for barbados
         sushi
@@ -215,18 +215,18 @@
         system-config-printer
 
         # --- hypr* extras not in the de tree ---
-        hyprland-guiutils # may already ride along with pkgs.hyprland
+        hyprland-qtutils # was hyprland-guiutils in the draft — the nixpkgs attr is hyprland-qtutils; may already ride along with pkgs.hyprland
         hyprsunset # plain package; HM also has services.hyprsunset (verify) if a service is wanted
 
         # --- Qt image formats (qt6-imageformats) ---
         kdePackages.qtimageformats
 
         # --- security / tokens ---
-        yubico-authenticator # yubico-authenticator-bin
+        yubioath-flutter # Yubico Authenticator — the yubico-authenticator attr doesn't exist in this nixpkgs; this is the same app
         yubikey-manager # ykman
 
         # --- misc hardware ---
-        libvpl-gpu-rt # vpl-gpu-rt (Intel oneVPL GPU runtime)
+        onevpl-intel-gpu # Intel oneVPL GPU runtime (was libvpl-gpu-rt — renamed in nixpkgs)
       ];
     };
 
