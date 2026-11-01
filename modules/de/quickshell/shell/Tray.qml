@@ -1,0 +1,76 @@
+import qs
+import "stylized"
+import "config"
+import Quickshell.Services.SystemTray
+import QtQuick
+import QtQuick.Layouts
+
+StylizedPaddedRectangle {
+    id: tray
+    level: 1
+
+    visible: SystemTray.items.values.length !== 0
+
+    child: StylizedRowLayout {
+        id: trayLayout
+        anchors.fill: parent
+        anchors.margins: Sizes.gap
+
+        Repeater {
+            model: SystemTray.items
+            Image {
+                id: trayItem
+                required property SystemTrayItem modelData
+
+                source: modelData.icon
+                sourceSize.width: Sizes.iconSize
+                sourceSize.height: Sizes.iconSize
+                fillMode: Image.PreserveAspectFit
+
+                Loader {
+                    id: trayMenuLoader
+                    anchors.fill: parent
+                    active: true
+                    sourceComponent: TrayMenu {
+                        id: trayMenu
+                        menuHandle: trayItem.modelData.menu
+                        anchorX: trayItem.x + trayLayout.x + tray.x + leftRow.x + mainBar.x
+                        anchorY: mainBar.height
+                        onReload: {
+                            active = !active;
+                            active = !active;
+                        }
+                    }
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    acceptedButtons: Qt.AllButtons
+                    onPressed: event => {
+                        if (event.buttons & Qt.LeftButton) {
+                            if (modelData.onlyMenu) {
+                                trayMenuLoader.item.toggleVisibility();
+                            } else {
+                                modelData.activate();
+                            }
+                        }
+                        if (event.buttons & Qt.RightButton) {
+                            if (modelData.hasMenu) {
+                                trayMenuLoader.item.toggleVisibility();
+                            } else {
+                                modelData.activate();
+                            }
+                        }
+                        if (event.buttons & Qt.MiddleButton) {
+                            modelData.secondaryActivate();
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    Behavior on implicitWidth {
+        StylizedNumberAnimation {}
+    }
+}

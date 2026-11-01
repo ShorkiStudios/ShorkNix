@@ -1,0 +1,29 @@
+{
+  os =
+    { ... }:
+    {
+      programs.dconf.enable = true;
+    };
+  home =
+    { pkgs, style, ... }:
+    {
+      gtk = {
+        enable = true;
+        colorScheme = "dark";
+        iconTheme = {
+          package = pkgs.adwaita-icon-theme;
+          name = "Adwaita";
+        };
+        font = {
+          name = style.font.name;
+          package = (style.font.package pkgs);
+        };
+      };
+      dconf.settings = {
+        "org/gnome/desktop/interface" = {
+          color-scheme = "prefer-dark";
+          icon-theme = "Adwaita";
+        };
+      };
+    };
+}

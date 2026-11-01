@@ -1,0 +1,110 @@
+{
+  enable = false;
+  os =
+    { ... }:
+    {
+      security.pam.services.hyprlock = { };
+    };
+  home =
+    {
+      lib,
+      style,
+      ...
+    }:
+    {
+      programs.hyprlock = {
+        enable = true;
+        settings = {
+          general = {
+            disable_loading_bar = true;
+            grace = 0;
+            hide_cursor = false;
+            no_fade_in = false;
+            no_fade_out = false;
+            ignore_empty_input = false;
+          };
+          auth."fingerprint:enabled" = true;
+          background = [
+            {
+              path = "screenshot";
+              blur_passes = 2;
+              blur_size = 10;
+              noise = 0.1;
+              contrast = 1.0;
+              brightness = 0.3;
+              vibrancy = 0.0;
+              vibrancy_darkness = 0.0;
+            }
+          ];
+          input-field = [
+            {
+              size = "200, 50";
+              fade_on_empty = false;
+              font_color = "rgb(255, 255, 255)";
+              font_family = style.font.name;
+              inner_color = "rgba(0, 0, 0, 0)";
+              outer_color = "rgb(255, 255, 255)";
+              outline_thickness = style.border.thickness;
+              placeholder_text = "<i>Password...</i>";
+              check_color = "rgb(255, 255, 100)";
+              fail_color = "rgb(255, 100, 100)";
+              fail_text = "<i>Incorrect password</i>";
+            }
+          ];
+          label = [
+            {
+              position = "0, 100";
+              text = "cmd[update:1000] echo \"<b>$(date '+%H:%M:%S')</b>\"";
+              color = "rgb(255, 255, 255)";
+              font_size = style.font.size * 3;
+              font_family = style.font.name;
+            }
+            {
+              position = "-100, -100";
+              text = "⏻";
+              color = "rgb(255, 255, 255)";
+              font_size = style.font.size * 2;
+              font_family = style.font.name;
+              onclick = "hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown now";
+            }
+            {
+              position = "0, -100";
+              text = "";
+              color = "rgb(255, 255, 255)";
+              font_size = style.font.size * 2;
+              font_family = style.font.name;
+              onclick = "hyprshutdown -t 'Rebooting...' --post-cmd 'reboot'";
+            }
+            {
+              position = "100, -100";
+              text = "󰈆";
+              color = "rgb(255, 255, 255)";
+              font_size = style.font.size * 2;
+              font_family = style.font.name;
+              onclick = "hyprshutdown -t 'Exiting...'";
+            }
+          ];
+        };
+      };
+      wayland.windowManager.hyprland.settings = {
+        bind = [
+          {
+            _args = [
+              "SUPER + L"
+              (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"hyprlock\")")
+            ];
+          }
+        ];
+        on = [
+          {
+            _args = [
+              "hyprland.start"
+              (lib.generators.mkLuaInline ''function() hl.dispatch(hl.dsp.exec_cmd("sleep 0.5; hyprlock")) end'')
+            ];
+          }
+        ];
+      };
+      # programs.niri.settings.binds."Mod+L".action.spawn = [ "hyprlock" ];
+    };
+  deps = modules: with modules; [ de.hyprshutdown ];
+}
