@@ -35,6 +35,31 @@
         fi
       '';
     };
+    home.file.".local/bin/bbr" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        # barbados build + switch + SOFT reboot + auto-commit/push (2026-11-01).
+        # Soft reboot restarts all of userspace into the new generation on the
+        # SAME kernel: no firmware POST, no LUKS prompt. Desktop and apps close.
+        cd "$HOME/barbados-config" || exit 1
+        nix-shell -p nh --run 'nh os switch . --hostname barbados' || exit $?
+        git add -A
+        if git diff --cached --quiet; then
+          echo "bbr: tree clean, nothing to push"
+        else
+          git commit -q -m "bbr: switch + soft-reboot $(date -Iseconds)" && git push -q || echo "bbr: PUSH FAILED — commit is saved locally and will go out with the next successful push"
+        fi
+        if [ "$(readlink /run/booted-system/kernel)" != "$(readlink /run/current-system/kernel)" ]; then
+          echo "bbr: KERNEL CHANGED — a soft reboot cannot load it. Full reboot instead: sudo reboot"
+          exit 0
+        fi
+        echo "bbr: soft-rebooting in 5 seconds — desktop and all apps will close"
+        sudo -v
+        sleep 5
+        sudo systemctl soft-reboot
+      '';
+    };
     home.file.".local/bin/bbt" = {
       executable = true;
       text = ''
