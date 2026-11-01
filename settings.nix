@@ -46,9 +46,11 @@
             coding
             essential
             gaming
+            keybinds
             misc
             networking
             parity
+            shortcuts
             social
             utils
             video
