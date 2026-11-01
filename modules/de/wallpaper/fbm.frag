@@ -144,8 +144,24 @@ float fade(float x) {
     return clamp(1.0 + (RIPPLE_WIDTH * RIPPLE_COUNT - ripple) / (GLOW_WIDTH * RIPPLE_COUNT * 2.0), 0.0, 1.0); //pow(ripple, 5.0);
 }
 
+// Pansexual flag palette (barbados, 2026-11-01 — replaces the original
+// full-rainbow hue cycle at Shorki's request; original in git history).
+// #FF218C pink, #FFD800 yellow, #21B1FF cyan, cycled and wrapped.
+vec3 panColor(float t, float lightScale) {
+    vec3 pink = srgb_lsrgb(vec3(1.000, 0.129, 0.549));
+    vec3 yellow = srgb_lsrgb(vec3(1.000, 0.847, 0.000));
+    vec3 cyan = srgb_lsrgb(vec3(0.129, 0.694, 1.000));
+    t = fract(t);
+    vec3 c = mix(pink, yellow, smoothstep(0.000, 0.333, t));
+    c = mix(c, cyan, smoothstep(0.333, 0.667, t));
+    c = mix(c, pink, smoothstep(0.667, 1.000, t));
+    vec3 lch = lsrgb_lch(c);
+    lch.r = clamp(lch.r * lightScale, 0.0, 1.0);
+    return lch_lsrgb(lch);
+}
+
 void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     float p = pattern(fragCoord * SCALE / iResolution.y);
-    float hue = (p + iTime * RAINBOW_TIME_SCALE) * RAINBOW_REPEATS;
-    fragColor = vec4(lsrgb_srgb(lch_lsrgb(vec3(fade(p) * LIGHTNESS, CHROMA, hue))), 1.0);
+    float t = (p + iTime * RAINBOW_TIME_SCALE) * 3.0;
+    fragColor = vec4(lsrgb_srgb(panColor(t, fade(p) * 1.2)), 1.0);
 }
