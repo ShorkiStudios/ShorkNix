@@ -156,54 +156,16 @@
                 (lib.generators.mkLuaInline "hl.dsp.window.kill()")
               ];
             }
-            {
-              _args = [
-                "SUPER + SPACE"
-                (lib.generators.mkLuaInline "hl.dsp.window.float()")
-              ];
-            }
-            {
-              _args = [
-                "SUPER + RETURN"
-                (lib.generators.mkLuaInline "hl.dsp.window.fullscreen()")
-              ];
-            }
-            {
-              _args = [
-                "SUPER + TAB"
-                (lib.generators.mkLuaInline "hl.dsp.window.cycle_next()")
-              ];
-            }
-            {
-              _args = [
-                "SUPER + SHIFT + TAB"
-                (lib.generators.mkLuaInline "hl.dsp.window.cycle_next({ next = false })")
-              ];
-            }
-            {
-              _args = [
-                "SUPER + CTRL + SHIFT + P"
-                (lib.generators.mkLuaInline ''
-                  hl.dsp.exec_cmd("hyprshutdown -t 'Shutting down...' --post-cmd 'shutdown now'")
-                '')
-              ];
-            }
-            {
-              _args = [
-                "SUPER + CTRL + SHIFT + L"
-                (lib.generators.mkLuaInline ''
-                  hl.dsp.exec_cmd("hyprshutdown -t 'Rebooting...' --post-cmd 'reboot'")
-                '')
-              ];
-            }
-            {
-              _args = [
-                "SUPER + CTRL + SHIFT + ESCAPE"
-                (lib.generators.mkLuaInline ''
-                  hl.dsp.exec_cmd("hyprshutdown -t 'Exiting...'")
-                '')
-              ];
-            }
+            # barbados 2026-11-01: SUPER+SPACE (was float), SUPER+RETURN
+            # (was fullscreen), SUPER+TAB / SUPER+SHIFT+TAB (was window
+            # cycling) binds removed — the Omarchy keybind layer claims
+            # all four: launcher, terminal, next/previous workspace.
+            # Float lives on SUPER+T and fullscreen on SUPER+F there.
+            # barbados 2026-11-01: the SUPER+CTRL+SHIFT+P/L/ESCAPE
+            # power trio (shutdown/reboot/logout) removed at Shorki's
+            # call — SUPER+CTRL+SHIFT+L sat one Shift away from his
+            # SUPER+CTRL+L lock key. Power actions live on the greetd
+            # screen and the bar.
             {
               _args = [
                 "SUPER + Up"
@@ -255,85 +217,95 @@
             {
               _args = [
                 "SUPER + SHIFT + Up"
-                (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"up\" })")
+                (lib.generators.mkLuaInline "hl.dsp.window.swap({ direction = \"up\" })")
               ];
             }
             {
               _args = [
                 "SUPER + SHIFT + Down"
-                (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"down\" })")
+                (lib.generators.mkLuaInline "hl.dsp.window.swap({ direction = \"down\" })")
               ];
             }
             {
               _args = [
                 "SUPER + SHIFT + Left"
-                (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"left\" })")
+                (lib.generators.mkLuaInline "hl.dsp.window.swap({ direction = \"left\" })")
               ];
             }
             {
               _args = [
                 "SUPER + SHIFT + Right"
-                (lib.generators.mkLuaInline "hl.dsp.window.move({ direction = \"right\" })")
+                (lib.generators.mkLuaInline "hl.dsp.window.swap({ direction = \"right\" })")
               ];
             }
             {
               _args = [
                 "XF86AudioLowerVolume"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-\")")
+                { locked = true; repeating = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioRaiseVolume"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+ --limit 1.5\")")
+                { locked = true; repeating = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioMute"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle\")")
+                { locked = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioMicMute"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle\")")
+                { locked = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioPlay"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"playerctl play-pause\")")
+                { locked = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioStop"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"playerctl stop\")")
+                { locked = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioPrev"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"playerctl previous\")")
+                { locked = true; }
               ];
             }
             {
               _args = [
                 "XF86AudioNext"
                 (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"playerctl next\")")
+                { locked = true; }
               ];
             }
             {
               _args = [
                 "XF86MonBrightnessDown"
-                (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"brightnessctl s 10%-\")")
+                (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"brightnessctl s 5%-\")")
+                { locked = true; repeating = true; }
               ];
             }
             {
               _args = [
                 "XF86MonBrightnessUp"
-                (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"brightnessctl s +10%\")")
+                (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"brightnessctl s +5%\")")
+                { locked = true; repeating = true; }
               ];
             }
             {

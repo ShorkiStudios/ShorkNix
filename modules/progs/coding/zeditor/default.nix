@@ -78,14 +78,10 @@
         "text/plain" = "dev.zed.Zed.desktop";
         "text/*" = "dev.zed.Zed.desktop";
       };
-      wayland.windowManager.hyprland.settings.bind = [
-        {
-          _args = [
-            "SUPER + W"
-            (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"zeditor\")")
-          ];
-        }
-      ];
+      # barbados 2026-11-01: SUPER+W bind removed — the Omarchy
+      # keybind layer claims SUPER+W for close-window; the editor
+      # lives on SUPER+SHIFT+N there.
+      wayland.windowManager.hyprland.settings.bind = [ ];
     };
   deps = modules: with modules; [ progs.utils.nix-ld ];
 }

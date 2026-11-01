@@ -120,5 +120,36 @@
       # Generated-config merge: DONE 2026-11-01 — LUKS devices,
       # fileSystems and swapDevices above were merged verbatim from
       # the fresh install's generated files (see STAGING-NOTES.md).
+
+      # Mihomo OFF for barbados (Shorki's call, 2026-11-01): it's
+      # tt0fu's proxy daemon, its configFile points at a private
+      # config from their machine, and the service fails at every
+      # boot without it. Shorki doesn't use it. (The module also
+      # enables services.resolved with upstream DNS — left alone
+      # for now; separate decision.)
+      services.mihomo.enable = lib.mkForce false;
+
+      # Same call extended to DNS (Shorki, 2026-11-01 "do that as
+      # well"): the mihomo module also forces systemd-resolved
+      # with Google/Cloudflare/Yandex upstreams. Off — the laptop
+      # uses normal DHCP/NetworkManager DNS (his router's AdGuard
+      # Home does the upstream filtering anyway).
+      services.resolved.enable = lib.mkForce false;
+
+      # Isabel's SSH key (Muse VM). Was only in the stock install's
+      # configuration.nix, which this flake replaces — without this,
+      # the flake's sshd rejects her key. (Interim manual add to
+      # ~/.ssh/authorized_keys was done 2026-11-01; this makes it
+      # survive rebuilds.)
+      users.users.shork.openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+Jp3qSJjnRPmlNnSnh5T23B6E3qdJpVsfUnS1xg5BK hatch"
+      ];
+
+      # Home Manager: back up (don't die on) pre-existing files it
+      # would clobber. First boot 2026-11-01 failed activation on
+      # stock-install leftovers (.gtkrc-2.0, gtk settings.ini,
+      # mimeapps.list) — with this set, they're renamed to
+      # *.hm-backup instead of aborting the whole activation.
+      home-manager.backupFileExtension = "hm-backup";
     };
 }

@@ -20,13 +20,9 @@
           remember_window_size = false;
         };
       };
-      wayland.windowManager.hyprland.settings.bind = [
-        {
-          _args = [
-            "SUPER + Q"
-            (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"kitty\")")
-          ];
-        }
-      ];
+      # barbados 2026-11-01: SUPER+Q bind removed — the Omarchy
+      # keybind layer claims SUPER+Q for close-window; the terminal
+      # lives on SUPER+RETURN there.
+      wayland.windowManager.hyprland.settings.bind = [ ];
     };
 }

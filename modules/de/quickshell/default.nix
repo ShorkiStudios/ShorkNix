@@ -33,28 +33,15 @@
           }
         ];
         bind = [
-          {
-            _args = [
-              "SUPER + A"
-              (lib.generators.mkLuaInline "hl.dsp.global(\"quickshell:toggleLauncher\")")
-            ];
-          }
-          {
-            _args = [
-              "SUPER + V"
-              (lib.generators.mkLuaInline "hl.dsp.global(\"quickshell:toggleClipboard\")")
-            ];
-          }
+          # barbados 2026-11-01: SUPER+A (launcher), SUPER+V
+          # (clipboard) and SUPER+L (lock) binds removed — the
+          # Omarchy keybind layer puts the launcher on SUPER+SPACE,
+          # clipboard on SUPER+CTRL+V, and lock on SUPER+CTRL+L.
+          # SUPER+N notifications stays.
           {
             _args = [
               "SUPER + N"
               (lib.generators.mkLuaInline "hl.dsp.global(\"quickshell:toggleNotifications\")")
-            ];
-          }
-          {
-            _args = [
-              "SUPER + L"
-              (lib.generators.mkLuaInline "hl.dsp.global(\"quickshell:lock\")")
             ];
           }
         ];

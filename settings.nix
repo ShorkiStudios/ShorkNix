@@ -48,6 +48,7 @@
             gaming
             misc
             networking
+            parity
             social
             utils
             video

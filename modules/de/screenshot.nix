@@ -24,18 +24,9 @@
             (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("grimblast -nf copysave screen \"$HOME/Pictures/Screenshots/$(date +\"%Y-%m-%d_%H-%M-%S\").png\"")'')
           ];
         }
-        {
-          _args = [
-            "SUPER + S"
-            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("grimblast -nf copysave area \"$HOME/Pictures/Screenshots/$(date +\"%Y-%m-%d_%H-%M-%S\").png\"")'')
-          ];
-        }
-        {
-          _args = [
-            "SUPER + SHIFT + S"
-            (lib.generators.mkLuaInline ''hl.dsp.exec_cmd("grimblast -nf copysave screen \"$HOME/Pictures/Screenshots/$(date +\"%Y-%m-%d_%H-%M-%S\").png\"")'')
-          ];
-        }
+        # barbados: SUPER+S / SUPER+SHIFT+S screenshot binds removed
+        # 2026-11-01 — Omarchy keybind layer claims SUPER+S for the
+        # scratchpad. Screenshots stay on Print / SHIFT+Print.
       ];
     };
 }

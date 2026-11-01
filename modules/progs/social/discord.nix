@@ -243,8 +243,12 @@
       wayland.windowManager.hyprland.settings.bind = [
         {
           _args = [
+            # barbados 2026-11-01: repointed discord → legcord. The
+            # parity layer disables nixcord (Vencord) and installs
+            # Legcord as Shorki's Discord client; this bind survives
+            # that, so it launches the client he actually has.
             "SUPER + D"
-            (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"discord\")")
+            (lib.generators.mkLuaInline "hl.dsp.exec_cmd(\"legcord\")")
           ];
         }
       ];
