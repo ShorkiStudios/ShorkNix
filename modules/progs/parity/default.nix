@@ -226,7 +226,7 @@
         yubikey-manager # ykman
 
         # --- misc hardware ---
-        onevpl-intel-gpu # Intel oneVPL GPU runtime (was libvpl-gpu-rt — renamed in nixpkgs)
+        vpl-gpu-rt # Intel oneVPL GPU runtime (draft said libvpl-gpu-rt; onevpl-intel-gpu is a throwing alias for this in this nixpkgs)
       ];
     };
 
