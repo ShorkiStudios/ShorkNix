@@ -148,7 +148,7 @@
         gnome-disk-utility
         gnome-themes-extra
         imv # image viewer; progs/utils/feh.nix (theirs) stays too
-        libreoffice # libreoffice-fresh
+        # libreoffice REMOVED 2026-11-01 at Shorki's request (same cut as dolphin-emu).
         mpv
         mpvScripts.mpris # was mpv-mpris — mpv scripts live under mpvScripts in this nixpkgs
         obsidian
