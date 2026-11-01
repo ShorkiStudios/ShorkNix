@@ -174,7 +174,7 @@
         vips # libvips
 
         # --- coding ---
-        clang # progs/coding/languages/c++.nix has clang-tools + gcc, not the compiler
+        (lib.lowPrio clang) # progs/coding/languages/c++.nix has clang-tools + gcc, not the compiler — lowPrio so clang's cc/c++ links yield to gcc-wrapper in home-manager-path (buildEnv collision found 2026-11-01); clang/clang++ themselves stay
         luarocks
         lua5_1 # lua51
         mise # mise-bin
