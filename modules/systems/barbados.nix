@@ -27,7 +27,7 @@
       boot = {
         kernelModules = [ "kvm-intel" ];
         # Hibernate resume: the encrypted swap partition below.
-        resumeDevice = "/dev/mapper/luks-15778c82-f133-432d-819b-c7be64d72bda";
+        resumeDevice = "/dev/mapper/cryptswap";
         initrd = {
           availableKernelModules = [
             "xhci_pci"
@@ -44,11 +44,14 @@
           # (hardware-configuration.nix + the swap entry Calamares put
           # in configuration.nix), 2026-11-01. Root LUKS first, then the
           # swap LUKS.
+          # Devices are referenced by GPT partition label, not UUID,
+          # so rescue/repair work uses human-readable names (Shorki's
+          # call, 2026-11-01). The installer had already partlabeled
+          # p1 "EFI" and p2 "root"; p3 was named "swap" to match.
+          # Mapping names are likewise plain: cryptroot / cryptswap.
           luks.devices = {
-            "luks-e3fc7de3-1393-47c1-8952-96bb7567f0d9".device =
-              "/dev/disk/by-uuid/e3fc7de3-1393-47c1-8952-96bb7567f0d9";
-            "luks-15778c82-f133-432d-819b-c7be64d72bda".device =
-              "/dev/disk/by-uuid/15778c82-f133-432d-819b-c7be64d72bda";
+            "cryptroot".device = "/dev/disk/by-partlabel/root";
+            "cryptswap".device = "/dev/disk/by-partlabel/swap";
           };
         };
         extraModulePackages = [ ];
@@ -59,21 +62,21 @@
       # subvolumes for /home and /nix, vfat ESP).
       fileSystems = {
         "/" = {
-          device = "/dev/mapper/luks-e3fc7de3-1393-47c1-8952-96bb7567f0d9";
+          device = "/dev/mapper/cryptroot";
           fsType = "btrfs";
         };
         "/home" = {
-          device = "/dev/mapper/luks-e3fc7de3-1393-47c1-8952-96bb7567f0d9";
+          device = "/dev/mapper/cryptroot";
           fsType = "btrfs";
           options = [ "subvol=home" ];
         };
         "/nix" = {
-          device = "/dev/mapper/luks-e3fc7de3-1393-47c1-8952-96bb7567f0d9";
+          device = "/dev/mapper/cryptroot";
           fsType = "btrfs";
           options = [ "subvol=nix" ];
         };
         "/boot" = {
-          device = "/dev/disk/by-uuid/B674-983F";
+          device = "/dev/disk/by-partlabel/EFI";
           fsType = "vfat";
           options = [
             "fmask=0077"
@@ -83,7 +86,7 @@
       };
 
       swapDevices = [
-        { device = "/dev/mapper/luks-15778c82-f133-432d-819b-c7be64d72bda"; }
+        { device = "/dev/mapper/cryptswap"; }
       ];
 
       # Intel Iris Xe (Tiger Lake GT2): accelerated graphics + VA-API
