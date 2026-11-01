@@ -20,6 +20,21 @@
         fi
       '';
     };
+    home.file.".local/bin/bbs" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        # barbados build + LIVE switch + auto-commit/push (2026-11-01) — no reboot for everyday changes
+        cd "$HOME/barbados-config" || exit 1
+        nix-shell -p nh --run 'nh os switch . --hostname barbados' || exit $?
+        git add -A
+        if git diff --cached --quiet; then
+          echo "bbs: tree clean, nothing to push"
+        else
+          git commit -q -m "bbs: switch $(date -Iseconds)" && git push -q || echo "bbs: PUSH FAILED — commit is saved locally and will go out with the next successful push"
+        fi
+      '';
+    };
     home.file.".local/bin/bbt" = {
       executable = true;
       text = ''
