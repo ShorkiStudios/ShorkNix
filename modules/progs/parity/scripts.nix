@@ -11,5 +11,13 @@
         cd "$HOME/barbados-config" && exec nix-shell -p nh --run 'nh os build . --hostname barbados'
       '';
     };
+    home.file.".local/bin/bbt" = {
+      executable = true;
+      text = ''
+        #!/bin/sh
+        # barbados boot — short form of the nh os boot command (stage for next boot; reboot separately)
+        cd "$HOME/barbados-config" && exec nix-shell -p nh --run 'nh os boot . --hostname barbados'
+      '';
+    };
   };
 }
