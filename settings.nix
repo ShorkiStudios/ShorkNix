@@ -43,6 +43,7 @@
             progs."3d"
           ]
           ++ (with progs; [
+            arctis
             coding
             essential
             gaming
@@ -52,7 +53,6 @@
             parity
             shortcuts
             social
-            tunnel
             utils
             video
             virtualization
