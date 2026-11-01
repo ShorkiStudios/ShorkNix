@@ -174,7 +174,7 @@
         vips # libvips
 
         # --- coding ---
-        (lib.lowPrio clang) # progs/coding/languages/c++.nix has clang-tools + gcc, not the compiler — lowPrio so clang's cc/c++ links yield to gcc-wrapper in home-manager-path (buildEnv collision found 2026-11-01); clang/clang++ themselves stay
+        # clang compiler REMOVED 2026-11-01: its wrapper's bin/cc + bin/c++ collide with the tree's gcc-wrapper in home-manager-path, and lib.lowPrio did NOT change the evaluated derivation (verified — identical drvPath). tt0fu's progs/coding/languages/c++.nix already provides gcc + clang-tools (clangd/clang-format/clang-tidy). Re-add the clang driver later via a non-colliding route if Shorki wants it.
         luarocks
         lua5_1 # lua51
         mise # mise-bin
