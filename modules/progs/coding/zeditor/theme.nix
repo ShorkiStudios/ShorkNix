@@ -1,7 +1,7 @@
 color: {
   "$schema" = "https://zed.dev/schema/themes/v0.2.0.json";
   name = "Rainbow";
-  author = "ttofu";
+  author = "shorki";
   themes = [
     {
       name = "Rainbow Dark";

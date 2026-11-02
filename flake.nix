@@ -7,14 +7,6 @@
     # Do not edit the inputs between the markers. They will get rewritten by
     # `nix run .#generate-inputs` (run automatically by build.sh / update.sh).
     # GENERATED INPUTS START
-    gridboard = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:tt0fu/gridboard";
-    };
     home-manager = {
       inputs = {
         nixpkgs = {
@@ -64,9 +56,6 @@
       };
       url = "github:4evy/nixcord";
     };
-    nixos-hardware = {
-      url = "github:NixOS/nixos-hardware/master";
-    };
     nixpkgs = {
       url = "nixpkgs/nixos-unstable";
     };
@@ -81,14 +70,6 @@
       };
       url = "github:nix-community/nixpkgs-xr";
     };
-    pulsemeeter = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:theRealCarneiro/pulsemeeter";
-    };
     quickshell = {
       inputs = {
         nixpkgs = {
@@ -96,14 +77,6 @@
         };
       };
       url = "github:quickshell-mirror/quickshell";
-    };
-    rbxport = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:tt0fu/rbxport/nix-source-package";
     };
     zen-browser = {
       inputs = {

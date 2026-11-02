@@ -1,5 +1,5 @@
 # Parity module — Shorki's pre-wipe (Omarchy/Arch) package set, layered
-# on top of the tt0fu tree. Purely additive: it installs what his old
+# on top of the base tree. Purely additive: it installs what his old
 # system had that the existing trees don't already provide, wires the
 # NixOS options that replace Arch system packages (input method,
 # keyring, gvfs, mDNS, locate, thermal, Waydroid, U2F PAM, zram, NTFS),
@@ -106,7 +106,7 @@
   home =
     { lib, pkgs, ... }:
     {
-      # --- Discord: replace tt0fu's nixcord stack (official Discord +
+      # --- Discord: replace the base nixcord stack (official Discord +
       #     Vencord, and Vesktop) with Legcord — Shorki's call,
       #     2026-11-01. mkForce because upstream's discord.nix sets
       #     programs.nixcord.enable = true at default priority.
@@ -176,7 +176,7 @@
         vips # libvips
 
         # --- coding ---
-        # clang compiler REMOVED 2026-11-01: its wrapper's bin/cc + bin/c++ collide with the tree's gcc-wrapper in home-manager-path, and lib.lowPrio did NOT change the evaluated derivation (verified — identical drvPath). tt0fu's progs/coding/languages/c++.nix already provides gcc + clang-tools (clangd/clang-format/clang-tidy). Re-add the clang driver later via a non-colliding route if Shorki wants it.
+        # clang compiler REMOVED 2026-11-01: its wrapper's bin/cc + bin/c++ collide with the tree's gcc-wrapper in home-manager-path, and lib.lowPrio did NOT change the evaluated derivation (verified — identical drvPath). the tree's progs/coding/languages/c++.nix already provides gcc + clang-tools (clangd/clang-format/clang-tidy). Re-add the clang driver later via a non-colliding route if Shorki wants it.
         luarocks
         lua5_1 # lua51
         mise # mise-bin

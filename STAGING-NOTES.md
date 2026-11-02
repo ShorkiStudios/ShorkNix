@@ -1,21 +1,21 @@
-# Staging notes — Barbados config (based on tt0fu/nixos-config)
+# Staging notes — Barbados config (based on upstream/nixos-config)
 
-Staged 2026-11-01 on the VM. This tree is a copy of upstream tt0fu
+Staged 2026-11-01 on the VM. This tree is a copy of upstream upstream
 (excluding .git) with the Barbados adaptation applied. Nothing has been
 pushed anywhere; this drops into the new repo Shorki creates.
 flake.nix was NOT touched (in particular, nothing between the
 GENERATED INPUTS markers).
 
-## Changed vs upstream tt0fu
+## Changed vs upstream upstream
 
 - `settings.nix`
-  - `userSettings.username`: `ttofu` → `shork`.
+  - `userSettings.username`: `upstream` → `shork`.
   - New `systems.barbados` entry: x86_64-linux, America/Denver,
     en_US.UTF-8, monitor eDP-1 1920x1080@60 scale 1. Modules:
     systems.barbados, core, de, progs."3d", plus progs trees coding,
     essential, gaming, misc, networking, social, utils, video,
     virtualization, vr.
-  - Upstream `ttofu-laptop` / `ttofu-pc` entries kept for reference;
+  - Upstream `upstream-laptop` / `upstream-pc` entries kept for reference;
     they are not built for Barbados.
 - `modules/systems/barbados.nix` (NEW) — host file in the repo's
   `{ os = ...; }` pattern. Filled in: not-detected import, kvm-intel,
@@ -26,7 +26,7 @@ GENERATED INPUTS markers).
 - Fingerprint (in `modules/systems/barbados.nix`):
   `services.fprintd.enable` + `tod.enable` +
   `tod.driver = pkgs.libfprint-2-tod1-elan` for the Elan 04f3:0c4b
-  sensor. (Upstream ttofu-laptop enables plain fprintd only.)
+  sensor. (Upstream upstream-laptop enables plain fprintd only.)
 - `modules/progs/essential/git.nix` — added git identity:
   name "Shorki", email "shorkicalypso@gmail.com"
   (via `programs.git.settings.user`; upstream had none set).

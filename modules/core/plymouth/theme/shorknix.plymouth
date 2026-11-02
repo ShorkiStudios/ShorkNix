@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=shorknix
+Description=display boot animation
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/shorknix
+ScriptFile=/usr/share/plymouth/themes/shorknix/shorknix.script

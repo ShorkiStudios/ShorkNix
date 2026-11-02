@@ -7,7 +7,7 @@
         themePackages = [
           (pkgs.callPackage self.package { })
         ];
-        theme = "ttofu";
+        theme = "shorknix";
       };
     };
   package =
@@ -16,7 +16,7 @@
       unzip,
     }:
     stdenv.mkDerivation {
-      pname = "ttofu-plymouth-theme";
+      pname = "shorknix-plymouth-theme";
       version = "1.0";
       src = ./theme;
 
@@ -29,7 +29,7 @@
       installPhase = ''
         ls -al
         mkdir -p $out/share/plymouth/themes
-        mv theme $out/share/plymouth/themes/ttofu
+        mv theme $out/share/plymouth/themes/shorknix
         find $out/share/plymouth/themes/ -name \*.plymouth -exec sed -i "s@\/usr\/@$out\/@" {} \;
       '';
     };

@@ -1,4 +1,4 @@
-# Flatpak support — not present anywhere in upstream tt0fu's tree.
+# Flatpak support — not present anywhere in the upstream tree.
 # Barbados needs it: Unleashed Recomp (and possibly other game ports)
 # ship as flatpaks.
 {

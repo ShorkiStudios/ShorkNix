@@ -104,7 +104,7 @@
       nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
       hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-      # Fingerprint reader: Elan 04f3:0c4b. Unlike tt0fu-laptop's
+      # Fingerprint reader: Elan 04f3:0c4b. Unlike a
       # mainline sensor, this one needs the TOD (Touch OEM) driver stack.
       # Enroll after first boot with `fprintd-enroll`. Known quirk from
       # the old install: the sensor can fail right after wake-from-sleep
@@ -123,7 +123,7 @@
       # the fresh install's generated files (see STAGING-NOTES.md).
 
       # Mihomo OFF for barbados (Shorki's call, 2026-11-01): it's
-      # tt0fu's proxy daemon, its configFile points at a private
+      # the upstream proxy daemon, its configFile points at a private
       # config from their machine, and the service fails at every
       # boot without it. Shorki doesn't use it. (The module also
       # enables services.resolved with upstream DNS — left alone

@@ -5,10 +5,10 @@
 # Shorki's personal overrides recovered from his Omarchy backup,
 # bindings.lua.bak-20261027-rebound). Approved by Shorki 2026-11-01
 # ("DO IT") with the map's recommended resolutions: Omarchy keys win
-# every conflict, tt0fu's power trio (SUPER+CTRL+SHIFT+P/L/ESCAPE) is
-# deleted, and the useful tt0fu extras stay.
+# every conflict, the stock power trio (SUPER+CTRL+SHIFT+P/L/ESCAPE) is
+# deleted, and the useful stock extras stay.
 #
-# Conflicting tt0fu binds were removed/changed at their source
+# Conflicting stock binds were removed/changed at their source
 # modules (see "barbados" comments in de/hyprland.nix,
 # de/quickshell/default.nix, de/screenshot.nix,
 # progs/essential/kitty.nix, progs/coding/zeditor/default.nix,
@@ -399,7 +399,7 @@
           ]
       );
 
-      # Binds that live in other modules (kept tt0fu binds and the
+      # Binds that live in other modules (kept stock binds and the
       # source-edited ones) — listed so the helper page is complete.
       kept = [
         { key = "SUPER + 1 … 9"; desc = "Switch to workspace"; }
