@@ -174,6 +174,26 @@
         "type": "github"
       }
     },
+    "fluxer": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793566689,
+        "narHash": "sha256-jckPvhD/4gDekIMrj8cqOs1exdP3Nq5iCuj+rBFGUXg=",
+        "owner": "Hy4ri",
+        "repo": "fluxer-flake",
+        "rev": "5414bd19feb015c69378592e8e77d00f4a0bca87",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Hy4ri",
+        "repo": "fluxer-flake",
+        "type": "github"
+      }
+    },
     "gridboard": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -679,21 +699,6 @@
         "type": "github"
       }
     },
-    "nix-flatpak": {
-      "locked": {
-        "lastModified": 1791644268,
-        "narHash": "sha256-f7Z4PmfnRxf7+37NN48ep+KsQauGtL5REE99pJtMNp8=",
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
-        "rev": "02656785ab214fa1c9655f1beaaf0269eeeec2ca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "gmodena",
-        "repo": "nix-flatpak",
-        "type": "github"
-      }
-    },
     "nix-math": {
       "inputs": {
         "flake-parts": "flake-parts",
@@ -1042,13 +1047,13 @@
     },
     "root": {
       "inputs": {
+        "fluxer": "fluxer",
         "gridboard": "gridboard",
         "home-manager": "home-manager",
         "hypr-dynamic-cursors": "hypr-dynamic-cursors",
         "hyprland": "hyprland",
         "hyprland-plugins": "hyprland-plugins",
         "metashape": "metashape",
-        "nix-flatpak": "nix-flatpak",
         "nix-math": "nix-math",
         "nixcord": "nixcord",
         "nixos-builder": "nixos-builder",
