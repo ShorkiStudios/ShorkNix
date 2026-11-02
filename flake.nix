@@ -7,14 +7,6 @@
     # Do not edit the inputs between the markers. They will get rewritten by
     # `nix run .#generate-inputs` (run automatically by build.sh / update.sh).
     # GENERATED INPUTS START
-    fluxer = {
-      inputs = {
-        nixpkgs = {
-          follows = "nixpkgs";
-        };
-      };
-      url = "github:Hy4ri/fluxer-flake";
-    };
     gridboard = {
       inputs = {
         nixpkgs = {
@@ -57,6 +49,9 @@
         };
       };
       url = "github:lalzhanov/metashape-nix";
+    };
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak";
     };
     nix-math = {
       url = "github:xddxdd/nix-math";
