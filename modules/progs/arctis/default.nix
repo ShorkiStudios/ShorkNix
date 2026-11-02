@@ -9,8 +9,15 @@
 # is the same uaccess rule from his Omarchy setup.
 {
   os = { ... }: {
+    # NixOS note (2026-11-02): the uaccess tag alone wasn't enough —
+    # logind never stamped the session ACL on these nodes (verified:
+    # udevadm showed TAGS uaccess:seat, but getfacl had no user entry
+    # even after a replug), so the daemon, running as shork, couldn't
+    # open them and reported "base not found". The nodes now get a
+    # dedicated group instead; shork joins it in systems/barbados.nix.
+    users.groups.arctis = { };
     services.udev.extraRules = ''
-      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="12e0", TAG+="uaccess"
+      KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="1038", ATTRS{idProduct}=="12e0", TAG+="uaccess", GROUP="arctis", MODE="0660"
     '';
   };
 

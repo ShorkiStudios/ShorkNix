@@ -147,6 +147,10 @@
       # the flake's sshd rejects her key. (Interim manual add to
       # ~/.ssh/authorized_keys was done 2026-11-01; this makes it
       # survive rebuilds.)
+      # Arctis base access: the OLED daemon opens the base's hidraw
+      # nodes, which the arctis module assigns to this group (2026-11-02).
+      users.users.shork.extraGroups = [ "arctis" ];
+
       users.users.shork.openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG+Jp3qSJjnRPmlNnSnh5T23B6E3qdJpVsfUnS1xg5BK hatch"
       ];
